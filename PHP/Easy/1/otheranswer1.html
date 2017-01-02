@@ -1,0 +1,34 @@
+<html>
+<body>
+<?php
+if(!empty($_POST['fname']) && isset($_POST['fname']))
+{
+$name = filter_var($_POST['fname'], FILTER_SANITIZE_STRING);
+$age = filter_var($_POST['fage'], FILTER_SANITIZE_STRING);
+$username = filter_var($_POST['fuser'], FILTER_SANITIZE_STRING);
+?> 
+Welcome <?php echo $name; ?>!<br />
+You are <?php echo $age; ?> years old. <br />
+Your username is <?php echo $username; ?>.
+<?php
+$myFile = $username.".csv";
+$fh = fopen($myFile, 'w') or die("can't open file");
+$stringData = ",";
+fwrite($fh, $name);
+fwrite($fh, $stringData);
+fwrite($fh, $age);
+fwrite($fh, $stringData);
+fwrite($fh, $username);
+fclose($fh);
+}
+else
+{ ?>
+<form action="index.php" method="post">
+Your name: <input name="fname" type="text"></input><br/>
+Your age: <input name="fage" type="text"></input><br/>
+Your username: <input name="fuser" type="text"></input><br/>
+<input type="submit" />
+</form>
+<?php
+}
+?>
